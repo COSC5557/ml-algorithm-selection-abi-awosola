@@ -5,13 +5,6 @@ editor: visual
 jupyter: python3
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{python}
 #Import required libraries
@@ -32,8 +25,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 ```
-
-You can add options to executable code like this
 
 ```{python}
 #| echo: false
@@ -109,7 +100,7 @@ print("y_test shape:",y_test.shape)
 ```
 ## Standardize the data
 
-### We will perform feature scaling to rescale data to have a mean of 0 and standard deviation of 1 (unit variance):
+Where applicable, we will perform feature scaling to rescale data to have a mean of 0 and standard deviation of 1 (unit variance):
 
 ```{python}
 #| echo: false
@@ -122,9 +113,8 @@ X_test = sc.fit_transform(X_test)
 ```
 
 
-## Implement Classification Models
 
-### We will build all six models and compare their accuracy scores.
+We will build all six classification models and compare their accuracy scores.
 
 
 ```{python}
@@ -137,7 +127,7 @@ result_dict_test = {}
 
 
 
-### 1. Logistic Regression
+1. Logistic Regression
 
 
 ```{python}
@@ -173,7 +163,7 @@ result_dict_test["Logistic Test Score"] = reg.score(X_test,y_test)
 ```
 
 
-### 2. KNN Classifier
+ 2. KNN Classifier
 
 
 ```{python}
@@ -196,7 +186,7 @@ result_dict_test["KNN Test Score"] = knn.score(X_test,y_test)
 
 
 
-### 3. Support Vector Classifier
+ 3. Support Vector Classifier
 
 ```{python}
 #| echo: false
@@ -219,7 +209,7 @@ result_dict_test["SVM Test Score"] = svc.score(X_test,y_test)
 
 
 
-# 4. Decision Tree Classifier
+4. Decision Tree Classifier
 
 ```{python}
 #| echo: false
@@ -240,7 +230,7 @@ result_dict_train["Decision Tree Train Score"] = np.mean(accuracies)
 result_dict_test["Decision Tree Test Score"] = dtc.score(X_test,y_test)
 ```
 
-### 5. Random Forest Classifier
+5. Random Forest Classifier
 
 ```{python}
 #| echo: false
@@ -266,7 +256,7 @@ result_dict_test["Random Forest Test Score"] = rfc.score(X_test,y_test)
 
 
 
-### 6. Naïve Bayes Classifier
+6. Naïve Bayes Classifier
 
 
 
@@ -290,7 +280,7 @@ result_dict_test["Gaussian NB Test Score"] = gnb.score(X_test,y_test)
 ```
 
 
-### Compare Accuracy Scores
+### Comparing Accuracy Scores
 
 
 ```{python}
@@ -302,9 +292,6 @@ df_result_train
 ```
 
 
-### Let’s display the accuracy scores of all testing models:
-
-
 ```{python}
 #| echo: false
 
@@ -313,10 +300,7 @@ df_result_test
 ```
 
 
-### Let’s visualize the scores, shall we?
-
-
-
+### Visualizing the scores
 
 ```{python}
 #| echo: false
