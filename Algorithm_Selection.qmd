@@ -26,6 +26,8 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 ```
 
+
+
 ```{python}
 #| echo: false
 
@@ -85,7 +87,8 @@ X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,
                                                random_state=42, shuffle=True) 
 ```
 
-### Data was splitted as 80% train data and 20% test data.
+
+Data was split as 80% train data and 20% test data.
 
 ```{python}
 #| echo: false
@@ -98,6 +101,7 @@ print("y_train shape:",y_train.shape)
 print("y_test shape:",y_test.shape)
 
 ```
+
 ## Standardize the data
 
 Where applicable, we will perform feature scaling to rescale data to have a mean of 0 and standard deviation of 1 (unit variance):
@@ -163,7 +167,7 @@ result_dict_test["Logistic Test Score"] = reg.score(X_test,y_test)
 ```
 
 
- 2. KNN Classifier
+2. KNN Classifier
 
 
 ```{python}
@@ -186,7 +190,7 @@ result_dict_test["KNN Test Score"] = knn.score(X_test,y_test)
 
 
 
- 3. Support Vector Classifier
+3. Support Vector Classifier
 
 ```{python}
 #| echo: false
@@ -230,6 +234,7 @@ result_dict_train["Decision Tree Train Score"] = np.mean(accuracies)
 result_dict_test["Decision Tree Test Score"] = dtc.score(X_test,y_test)
 ```
 
+
 5. Random Forest Classifier
 
 ```{python}
@@ -259,7 +264,6 @@ result_dict_test["Random Forest Test Score"] = rfc.score(X_test,y_test)
 6. Naïve Bayes Classifier
 
 
-
 ```{python}
 #| echo: false
 
@@ -280,6 +284,7 @@ result_dict_test["Gaussian NB Test Score"] = gnb.score(X_test,y_test)
 ```
 
 
+
 ### Comparing Accuracy Scores
 
 
@@ -292,6 +297,7 @@ df_result_train
 ```
 
 
+
 ```{python}
 #| echo: false
 
@@ -300,7 +306,9 @@ df_result_test
 ```
 
 
+
 ### Visualizing the scores
+
 
 ```{python}
 #| echo: false
