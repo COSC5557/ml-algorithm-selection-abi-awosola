@@ -7,7 +7,6 @@ format: pdf
 editor: visual
 ---
 
-
 \textcolor{blue}{Introduction:}
 
 The aim of this study is to determine the most suitable machine learning algorithm for predicting wine quality based on a dataset of wine attributes. We will employ a variety of machine learning algorithms commonly used for regression tasks, including logistic regression, support vector machines (SVM), decision trees, random forests, and Naïve Bayes classifier. By comparing the performance of these algorithms on the Wine Quality dataset, we aim to identify the algorithm(s) that produce the most accurate predictions.
@@ -15,7 +14,6 @@ The aim of this study is to determine the most suitable machine learning algorit
 \textcolor{blue}{Experimental Setup:}
 
 For this experiment, we will utilize Python and R programming languages along with several libraries such as pandas, scikit-learn, and matplotlib for Python; and tidyverse, knitr, DataExplore for R. These libraries provide functions for data manipulation, machine learning algorithms, and visualization.
-
 
 We will begin by loading the White Wine Quality dataset into pandas `DataFrame` and R `data.frame`.
 
@@ -25,7 +23,6 @@ The White Wine Quality dataset contains physicochemical properties of white vari
 
 The dataset consists of approximately 4900 observations. There are no missing values in the dataset.
 
- 
 ```{python}
 #| echo: false
 
@@ -73,9 +70,6 @@ print(data.head())
 data.groupby('quality').count()
 ```
 
-
-
-
 ```{r, data, message=F, warning=F, echo=FALSE}
 #Imports Data
 
@@ -83,7 +77,6 @@ wine_data <- read.table("winequality-white.csv", sep = ";",
                         check.names = TRUE, header=T)
 
 ```
-
 
 ```{r, message=F, warning=F, echo=F, fig.height=12, fig.width=16}
 library(tidyverse)
@@ -110,52 +103,45 @@ kable(wine_data_summary,
  result <- skimr::skim(wine_data)
  
  result[,c(1:3)]
-``` 
- 
+```
 
 \textcolor{blue}{Density Plots}
 
 The density plots show white wine variables distribution.
 
-
-```{r, message=F, warning=F, echo=F, fig.height=12, fig.width=16}  
+```{r, message=F, warning=F, echo=F, fig.height=12, fig.width=16}
  DataExplorer::plot_density(wine_data,
   title = "White Wine Variables Density Plot",
   theme_config = theme(plot.title = element_text(color = "blue"))) # density plot
 ```
 
-
-
 \textcolor{blue}{QQ Plots}
 
 QQ plots show tendency of variables to be normally distributed. Most points of a variable need to be on the 45-degree straight line for the variable to be normally distributed.
 
- 
 ```{r, message=F, warning=F, echo=F, fig.height=12, fig.width=16}
  DataExplorer::plot_qq(wine_data,
   title = "White Wine Variables QQ Plot", ncol = 4L,
   theme_config = theme(plot.title = element_text(color = "blue"))) # qq plot
 ```
 
-
-
 \textcolor{blue}{Correlation Plot}
- 
-The correlation plot shows the linear relation between the variables.  
+
+The correlation plot shows the linear relation between the variables.
 
 ```{r, message=F, warning=F, echo=F, fig.height=12, fig.width=16}
  
+   
  DataExplorer::plot_correlation(wine_data,
   title = "White Wine Variables Correlation Analysis",
   theme_config = theme(plot.title = element_text(color = "blue"))) # correlation analysis
  
 ```
 
-
 \textcolor{blue}{Boxplots}
 
 The boxplots show white wine variables distribution by wine `quality`.
- 
+
 ```{r, message=F, warning=F, echo=F, fig.height=12, fig.width=16}
 
  DataExplorer::plot_boxplot(wine_data, by = "quality", ncol = 2L,
@@ -163,9 +149,7 @@ The boxplots show white wine variables distribution by wine `quality`.
   theme_config = theme(plot.title = element_text(color = "blue")))
 ```
 
-
 The dots after the whiskers, (the horizontal end lines) represent outliers.
-
 
 \textcolor{blue}{Checking for null values}
 
@@ -184,12 +168,9 @@ data.dtypes
 
 ```
 
-
-
 \textcolor{blue}{Training and Test Datasets}
 
 Next, we will split the dataset into training and testing sets using an 80-20 split, respectively. Each machine learning algorithm is trained on the training set and the performance is evaluated on the test dataset.
-
 
 ```{python}
 #| echo: false
@@ -221,10 +202,6 @@ X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,
                                                random_state=42, shuffle=True) 
 ```
 
-
-
-
-
 ```{python}
 #| echo: false
 y_train = y_train.values.reshape(-1,1)
@@ -237,13 +214,9 @@ print("y_test shape:",y_test.shape)
 
 ```
 
-
-
-
 \textcolor{blue}{Data Preprocessing}
 
 Here is effort to preprocess the data by standardizing the features to have zero mean and unit variance. This preprocessing step is essential for algorithms sensitive to feature scaling, such as SVM.
-
 
 ```{python}
 #| echo: false
@@ -255,20 +228,22 @@ X_test = sc.fit_transform(X_test)
 
 ```
 
-We will build all six classification models and compare their accuracy scores.
-The machine learning algorithms considered for this experiment are as follows:
+We will build all six classification models and compare their accuracy scores. The machine learning algorithms considered for this experiment are as follows:
 
- 1. Logistic Regression
- 2. KNN Classifier
- 3. Support Vector Machine, (SVR)
- 4. Decision Tree Regression
- 5. Random Forest Regression
- 6. Naïve Bayes Classifier
- 
- 
+1.  Logistic Regression
+2.  KNN Classifier
+3.  Support Vector Machine, (SVR)
+4.  Decision Tree Regression
+5.  Random Forest Regression
+6.  Naïve Bayes Classifier
+
 For each algorithm, we will use default `hyperparameters` provided by `scikit-learn`. However, if necessary, we may perform `hyperparameter` tuning using techniques such as grid search or random search to further optimize the model performance.
 
-To ensure unbiased evaluation and mitigate `overfitting`, we will employ k-fold `cross-validation` with k=5. This technique partitions the dataset into k equal-sized folds, where each fold serves as the testing set once while the remaining k-1 folds are used for training. We will average the evaluation metrics across all folds to obtain a more robust estimate of the algorithm's performance.
+\textcolor{blue}{Cross–validation}
+
+The purpose of cross–validation is to test the ability of a machine learning model to predict new data. It is also used to flag problems like overfitting or selection bias and gives insights on how the model will generalize to an independent dataset.
+
+To test the ability of a machine learning model to predict new data, we will employ k-fold `cross-validation` with k=5. This technique partitions the dataset into k equal-sized folds, where each fold serves as the testing set once while the remaining k-1 folds are used for training.
 
 ```{python}
 #| echo: false
@@ -317,7 +292,6 @@ result_dict_test["Logistic Test Score"] = reg.score(X_test,y_test)
 
 KNN is a simple and intuitive algorithm used for both classification and regression tasks. It classifies a new data point by assigning it the majority class label among its k nearest neighbors in the feature space, where k is a `hyperparameter` chosen by the user. KNN operates on the principle that similar data points tend to belong to the same class. It is a non-parametric algorithm, which means it does not make explicit assumptions about the underlying data distribution.
 
-
 ```{python}
 #| echo: false
 
@@ -339,7 +313,6 @@ result_dict_test["KNN Test Score"] = knn.score(X_test,y_test)
 \textcolor{blue}{3.  Support Vector Classifier}
 
 SVM is a powerful supervised learning algorithm used for classification and regression tasks. In the case of regression, it is referred to as Support Vector Regression (SVR). SVR aims to find the `hyperplane` that best fits the data while maximizing the margin between different classes or, in the case of regression, minimizing the error between the predicted and actual values. It works by transforming the input data into a higher-dimensional space using a kernel function, allowing it to find a linear separation or regression boundary.
-
 
 ```{python}
 #| echo: false
@@ -363,8 +336,6 @@ result_dict_test["SVM Test Score"] = svc.score(X_test,y_test)
 \textcolor{blue}{4.  Decision Tree Classifier}
 
 Decision tree regression is a non-parametric supervised learning algorithm used for regression tasks. It works by recursively partitioning the feature space into regions, with each region associated with a specific prediction value. The decision tree learns from the data by selecting the feature that best splits the dataset at each node based on certain criteria (e.g., minimizing variance or mean squared error). Decision trees are easy to interpret and visualize, making them useful for understanding the decision-making process of the model.
-
-
 
 ```{python}
 #| echo: false
@@ -477,8 +448,6 @@ plt.show()
 \textcolor{blue}{Conclusion:}
 
 Random Forest Regression algorithm is the best machine learning algorithm for predicting the white wine quality.
-
-
 
 \textcolor{blue}{Code:}
 
